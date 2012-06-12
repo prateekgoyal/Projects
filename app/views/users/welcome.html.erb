@@ -1,0 +1,55 @@
+<div id="header_container">
+<!-- <div id="header">
+  <h3>Welcome <%= @user.name %>, </h3>
+</div> -->
+
+<div id = "useroptions">
+<%= link_to 'New Post', new_post_path %>
+<%= link_to 'Change password', edit_user_path(:id => @user.id) %>
+<%= link_to 'All Posts', :controller => "posts", :action => "index" %>
+</div>
+
+</div>
+<div style="color: #FFFFFF;
+    font: 18px Georgia,Utopia,'Palatino Linotype',Palatino,serif;
+    margin: 0.5em 0;
+    text-transform: none;">
+<h3>Listing all posts by you </h3>
+</div>
+
+<div style="position:relative;left:10%;">
+<% @posts.each do |post| %>
+    <p><i><%= post.name %></i></p>
+
+      <div id ="post_list">
+    <table style="width:550px;border-bottom-style:dotted;">
+        <tr>
+          <td class="list_description" colspan="2">
+      	   <dl>
+      	     <dt><%= post.title %></dt>
+             <br/>
+      	     <dd><%= truncate(strip_tags(post.content), :length => 200) %></dd>
+      	   </dl>
+          </td>
+        </tr>
+        <tr>
+          <td class="list_actions" style="text-align:left"><%= link_to 'Show', post %><br/>
+          <% if session[:user_id] == @user.id %>
+          <%= link_to 'Edit', edit_post_path(post) %><br\>
+          <%= link_to 'Destroy', post, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% end %>
+          <% time = Time.now - post.created_at %>
+          <% hour = (time/3600).round %>
+          <% seconds = time - hour*3600 %>
+          <% minutes = (seconds/60).round %>
+          <% if minutes < 0 %>
+          <% minutes = minutes + 60 %>
+          <% hour = hour - 1 %>
+          <% end %>
+          <td style="text-align:right;font-size: 70%">Posted <%= hour %> hours and <%= minutes %> minutes ago </td>
+        </tr>
+      </div>
+
+        <br/>
+  </table>
+<% end %>

@@ -1,0 +1,20 @@
+<div id="header_container">
+<div id="header">
+<h1>New user</h1>
+</div>
+</div>
+
+<%= render 'form' %>
+<% if session[:user_id] %>
+<% user = User.find(session[:user_id]) %>
+<%= link_to 'Back', welcome_user_path(:id => user.id) %>
+<% else %>
+<%= link_to 'Back', posts_path %>
+<% end %>
+
+<div id = "loginstuff" style="">
+<% if session[:user_id] == nil %>
+<%= link_to 'Login', :controller => "sessions", :action => "new" %>
+<%= link_to 'New User? Signup!', new_user_path %>
+<% end %> 
+<div>

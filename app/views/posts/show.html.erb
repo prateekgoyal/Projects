@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<!-- <p>
+  <i><%= @post.name %></i>
+</p>
+ -->
+  <!-- <b>Title:</b> -->
+  
+ 
+<div id="postcontent">
+	<div id = "posttitle">
+  		<%= @post.title %>
+  	</div>
+<p>
+  <%= @post.content %>
+</p>
+<% time = Time.now - @post.created_at %>
+<% hour = (time/3600).round %>
+<% seconds = time - hour*3600 %>
+<% minutes = (seconds/60).round %>
+<% if minutes < 0 %>
+<% minutes = minutes + 60 %>
+<% hour = hour - 1 %>
+<% end %>
+<p><i>Posted by <%= @post.name %> <%= hour %> hours and <%= minutes %> minutes ago</i></p>
+
+
+<h4><u>Comments:</u></h4>
+<%= render @post.comments%>
+<br/>
+<h4>Add a comment:</h4>
+<% if session[:user_id] %>
+<%= render 'comments/form' %>
+<% if session[:user_id] == @post.user_id %>
+<%= link_to 'Edit', edit_post_path(@post) %> 
+
+<%= link_to 'Back', welcome_user_path(:id => @post.user_id) %>
+<% end %>
+
+<% else %>
+<%= link_to 'Comment', :controller => "posts", :action => "comment" %>
+
+<%= link_to 'Back', posts_path %>
+
+<% end %>
+</div>
+
+<!-- <div id = "loginstuff" style="">
+<% if session[:user_id] == nil %>
+<%= link_to 'Login', :controller => "sessions", :action => "new" %>
+<%= link_to 'New User? Signup!', new_user_path %>
+<% end %> 
+<div>
+ -->

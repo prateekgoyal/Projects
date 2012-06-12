@@ -1,0 +1,14 @@
+<div id="header_container">
+<div id="postcontent">
+<div id="header">
+	<h1>New post</h1>
+</div>
+<%= render 'form' %>
+<% if session[:user_id] %>
+<% user = User.find(session[:user_id]) %>
+<%= link_to 'Back', welcome_user_path(:id => user.id) %>
+<% else %>
+<%= link_to 'Back', posts_path %>
+<% end %>
+</div>
+</div>

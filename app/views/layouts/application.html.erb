@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog</title>
+  <%= stylesheet_link_tag   "blog", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body style=''>
+
+	<div id ="contentbackpane">
+		<div>
+			<% if session[:user_id] %>
+				<% user = User.find(session[:user_id]) %>
+				<div style="height:20px">
+					<!-- <div style="float:left"><%= link_to 'Home', welcome_user_path(:id => user.id) %></div> -->
+					<div style="float:right">
+						Welcome <%= user.name %>
+						<%= link_to 'Logout', logout_path, :method => :delete %>
+					</div>
+				</div>
+			<% else %>
+				<div style="height:20px">
+					<div style="float:right">
+						<%= link_to 'Login', :controller => "sessions", :action => "new" %>
+						<span class="separator"> | </span>
+						<%= link_to 'Signup', new_user_path %>
+					</div>
+				</div>
+			<% end %>
+		</div>
+
+
+		<div id = "topheader" style=''>
+			<div id="headerlink">	
+				<% if session[:user_id] %>
+				<% user = User.find(session[:user_id]) %>
+				<h1> <%= link_to 'Chronus Blogger', welcome_user_path(:id => user.id) %> </h1>
+				<% else %>
+				<h1> <%= link_to 'Chronus Blogger', posts_path %> </h1>
+				<% end %>
+			</div>
+		</div>
+	
+	<div  style='position:relative;top:15%;left:10%;right:10%'>
+		<div id="yield">
+			<%= yield %>
+		</div>
+	</div>	
+
+	</div>
+
+</body>
+</html>

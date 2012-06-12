@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<div id="post_list">
+  <div id="header" style="position:relative;left:10%">
+    <h3>Listing posts</h3>
+  </div>
+
+
+
+  <div style="position:relative;left:10%;">
+  <% @posts.each do |post| %>
+    <p><i><%= post.name %> says</i></p>
+  <table style="width:550px;border-bottom-style:dotted;">
+  <tr>
+    <td class="list_description" colspan="2">
+	<dl>
+	  <dt><%= post.title %></dt>
+    <br/>
+	  <dd><%= truncate(strip_tags(post.content), :length => 200) %></dd>
+	</dl>
+</td>
+</tr>
+<tr>
+  <td class="list_actions" style="text-align:left"><%= link_to 'Show Post', post %><br/>
+      <% if post.user_id == session[:user_id] %>
+        <%= link_to 'Edit', edit_post_path(post) %><br\>
+        <%= link_to 'Destroy', post, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
+    <% time = Time.now - post.created_at %>
+    <% hour = (time/3600).round %>
+    <% seconds = time - hour*3600 %>
+    <% minutes = (seconds/60).round %>
+    <% if minutes < 0 %>
+    <% minutes = minutes + 60 %>
+    <% hour = hour - 1 %>
+    <% end %>
+      <td style="text-align:right; font-size:70%">Posted <%= hour %> hours and <%= minutes %> minutes ago 
+      </td>
+    
+  </tr>
+</table>
+<br/>
+<% end %>
+</div>
+
+
+</div>
+
+<br />
+
+<% if session[:user_id] %>
+<%= link_to 'My Posts', :controller => "users", :action => "welcome", :id => session[:user_id] %>
+<% end %>
+
