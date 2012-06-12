@@ -48,7 +48,6 @@
 </div>
 
 <br />
-
 <% if session[:user_id] %>
 <%= link_to 'My Posts', :controller => "users", :action => "welcome", :id => session[:user_id] %>
 <% end %>
